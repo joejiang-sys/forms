@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>薇閣小學資訊設備借用申請表</title>
+    <link rel="canonical" href="https://joejiang-sys.github.io/forms/"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"/>
+    <link rel="stylesheet" href="dist/style.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  </head>
+  <body>
+    <div class="container" id="app">
+      <div class="double-wrap" :class="{ hide: !loading }">
+        <div class="double">
+          <div class="double-bounce1"></div>
+          <div class="double-bounce2"></div>
+        </div>
+      </div>
+      <section class="form w-640">
+        <div class="text-center">
+          <h1>薇閣小學資訊設備借用申請表</h1>
+        </div>
+        <div class="text-left">
+            <h3>1. 借用人需於使用日期3天前，提出申請登記，並由資訊中心安排設備。<br>
+              2. 借用申請的填單日期與借用日期僅限30天內。<br>
+              3. 設備借用日為期1日，用畢當日歸還。欲借超過1日，敬請由單位主管核示。<br>
+              4. 請妥善保管與使用，若人為疏失，導致設備損壞或遺失時，需負賠償責任。<br>
+              5. iPad借用如需安裝使用特定App，請於用途說明內填寫App名稱。<br>
+              6. 如有借用之問題，敬請聯繫分機208。</h3>
+        </div>
+        <div class="form-group">
+          <label for="category">設備類別</label>
+        </div>
+        <div id="category">
+          <label><input type="radio" name="label" value="iPad" v-model="person.category" @change="clearDate"><span class="round button">iPad</span></label>
+          <label><input type="radio" name="label" value="DV" v-model="person.category" @change="clearDate"><span class="round button">DV</span></label>
+          <label><input type="radio" name="label" value="光碟機" v-model="person.category" @change="clearDate"><span class="round button">光碟機</span></label>
+          <label><input type="radio" name="label" value="教學提示機" v-model="person.category" @change="clearDate"><span class="round button">教學提示機</span></label>
+          <label><input type="radio" name="label" value="其他" v-model="person.category" @change="clearDate"><span class="round button">其他</span></label>
+        </div>
+        <div class="form-group">
+          <label for="main_date">借用日期</label>
+          <input class="form-control" id="main_date" type="date" v-model="main_date" @change="clearClassroom" readonly/>
+        </div>
+        <div class="form-group">
+          <label for="borrower">借用人</label>
+          <input class="form-control" id="borrower" type="text" v-model="person.borrower"/>
+        </div>
+        <div class="form-group">
+          <label for="message">用途說明</label>
+          <input class="form-control" id="message" type="text" v-model="person.message"/>
+        </div>
+        <div class="form-group">
+          <label for="classroom">使用課堂</label>
+          <!-- 星期三顯示的選項 -->
+          <div id="checkbox-wednesday">
+            <div id="checkbox">
+                <label><input type="checkbox" name="variety" value="整天" id="selectAll-wednesday" v-model="isAllDay" @change="toggleAll('wednesday')"/><span class="round button">整天</span></label>
+                <div class="indent">
+                    <label><input type="checkbox" name="variety" value="第一節" class="session-wednesday" v-model="person.classroom"/><span class="round button">第一節</span></label>
+                    <label><input type="checkbox" name="variety" value="第二節" class="session-wednesday" v-model="person.classroom"/><span class="round button">第二節</span></label>
+                    <label><input type="checkbox" name="variety" value="第三節" class="session-wednesday" v-model="person.classroom"/><span class="round button">第三節</span></label>
+                    <label><input type="checkbox" name="variety" value="第四節" class="session-wednesday" v-model="person.classroom"/><span class="round button">第四節</span></label>
+                    <label><input type="checkbox" name="variety" value="第五節" class="session-wednesday" v-model="person.classroom"/><span class="round button">第五節</span></label>
+                    <label><input type="checkbox" name="variety" value="學藝營" class="session-wednesday" v-model="person.classroom"/><span class="round button">學藝營</span></label>
+                </div>
+            </div>
+          </div>
+
+          <!-- 非星期三顯示的選項 -->
+          <div id="checkbox-not-wednesday">
+            <div id="checkbox">
+                <label><input type="checkbox" name="variety" value="整天" id="selectAll-not-wednesday" v-model="isAllDay" @change="toggleAll('not-wednesday')"/><span class="round button">整天</span></label>
+                <div class="indent">
+                    <label><input type="checkbox" name="variety" value="第一節" class="session-not-wednesday" v-model="person.classroom"/><span class="round button">第一節</span></label>
+                    <label><input type="checkbox" name="variety" value="第二節" class="session-not-wednesday" v-model="person.classroom"/><span class="round button">第二節</span></label>
+                    <label><input type="checkbox" name="variety" value="第三節" class="session-not-wednesday" v-model="person.classroom"/><span class="round button">第三節</span></label>
+                    <label><input type="checkbox" name="variety" value="第四節" class="session-not-wednesday" v-model="person.classroom"/><span class="round button">第四節</span></label>
+                    <label><input type="checkbox" name="variety" value="第五節" class="session-not-wednesday" v-model="person.classroom"/><span class="round button">第五節</span></label>
+                    <label><input type="checkbox" name="variety" value="第六節" class="session-not-wednesday" v-model="person.classroom"/><span class="round button">第六節</span></label>
+                    <label><input type="checkbox" name="variety" value="第七節" class="session-not-wednesday" v-model="person.classroom"/><span class="round button">第七節</span></label>
+                    <label><input type="checkbox" name="variety" value="安親班" class="session-not-wednesday" v-model="person.classroom"/><span class="round button">安親班</span></label>
+                </div>
+            </div>
+          </div>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+              document.getElementById('main_date').addEventListener('change', function() {
+                  const mainDateValue = this.value;
+                  const selectedDate = new Date(mainDateValue); // 解析日期
+                  const dayOfWeek = selectedDate.getUTCDay(); // 獲取星期幾，0 是星期日，3 是星期三
+
+                  // 取得要顯示的區塊
+                  const wednesdayCheckbox = document.getElementById('checkbox-wednesday');
+                  const notWednesdayCheckbox = document.getElementById('checkbox-not-wednesday');
+
+                  if (dayOfWeek === 3) { // 如果是星期三
+                      wednesdayCheckbox.style.display = 'block'; // 顯示星期三的選項
+                      notWednesdayCheckbox.style.display = 'none'; // 隱藏非星期三的選項
+                  } else {
+                      wednesdayCheckbox.style.display = 'none'; // 隱藏星期三的選項
+                      notWednesdayCheckbox.style.display = 'block'; // 顯示非星期三的選項
+                  }
+                });
+              });
+          </script>
+        <script>
+          document.addEventListener('DOMContentLoaded', function() {
+              function setupCheckboxControl(selectAllId, sessionClass) {
+                  const selectAll = document.getElementById(selectAllId);
+                  const sessionCheckboxes = document.querySelectorAll(`.${sessionClass}`);
+
+                  selectAll.addEventListener('change', function() {
+                      sessionCheckboxes.forEach(function(checkbox) {
+                          checkbox.checked = this.checked; // 根據主選框的狀態設置所有節次的狀態
+                      }, this);
+                  });
+
+                  sessionCheckboxes.forEach(function(checkbox) {
+                      checkbox.addEventListener('change', function() {
+                          selectAll.checked = Array.from(sessionCheckboxes).every(function(sessionCheckbox) {
+                              return sessionCheckbox.checked; // 檢查是否所有節次都被勾選
+                          });
+                      });
+                  });
+              }
+
+              // 設定星期三和非星期三的控制
+              setupCheckboxControl('selectAll-wednesday', 'session-wednesday');
+              setupCheckboxControl('selectAll-not-wednesday', 'session-not-wednesday');
+          });
+        </script>
+        <div class="form-group" v-if="person.category === 'iPad'">
+          <label for="classroomdisplay">剩餘數量</label>
+          <textarea class="form-control" id="classroomdisplay" type="text" v-model="person.classroomdisplay" disabled="disabled" readonly></textarea>
+        </div>
+        <div class="form-group">
+          <label for="num">借用數量</label>
+          <input class="form-control" id="num" type="number" v-model="person.num"/>
+        </div>
+        <div class="form-group">
+          <label for="end_date">預計歸還日期</label>
+          <input class="form-control" id="end_date" type="date" v-model="person.end_date" readonly/>
+        </div>
+        <script>
+          document.addEventListener('DOMContentLoaded', function() {
+              // 基本設置
+              var config = {
+                  minDate: "today",  // 限制只能選擇今天或之後的日期
+                  maxDate: new Date().fp_incr(29),  // 最大日期設為今天往後推算30天
+                  dateFormat: "Y-m-d"  // 設定日期格式為 yyyy-mm-dd
+              };
+  
+              // 初始化 main_date 選擇器
+              var mainDatePicker = flatpickr("#main_date", config);
+  
+              // 初始化 end_date 選擇器，動態設置最小日期
+              var endDatePicker = flatpickr("#end_date", {
+                  ...config,
+                  minDate: "today", // 預設最小日期為今天
+              });
+  
+              // 當 main_date 改變時，更新 end_date 的最小日期
+              document.getElementById('main_date').addEventListener('change', function() {
+                  var mainDate = mainDatePicker.selectedDates[0]; // 取得 main_date 選擇的日期
+                  if (mainDate) {
+                      // 更新 end_date 的最小可選日期
+                      endDatePicker.set('minDate', mainDate);
+                  }
+              });
+          });
+          </script>
+        <div class="submit"><a href="#" @click.prevent="submit">送出</a></div>
+      </section>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js"></script>
+    <script src="dist/main.min.js"></script>
+  </body>
+</html>
